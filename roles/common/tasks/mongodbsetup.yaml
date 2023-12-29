@@ -8,15 +8,15 @@
     name: mongodb-org-shell
     state: present
 
-- name: get the entries count
+- name: "get the catalogue entries count"
   ansible.builtin.command:  mongo --host mongodb.akhi.fun --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
-  register: entries_count
-  when: "{{ component }}" == "catalogue"
+  register: catalogue_count
+  when: component == "catalogue"
 
-- name: get the entries count
-  ansible.builtin.command:  mongo --host mongodb.akhi.fun --quiet --eval 'db = db.getSiblingDB("catalogue"); db.users.count()'
-  register: entries_count
-  when: "{{ component }}" == "user"
+- name: "get the user entries count"
+  ansible.builtin.command:  mongo --host mongodb.akhi.fun --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
+  register: users_count
+  when: component == "user"
 
 
 # - name: print the count
@@ -25,4 +25,8 @@
 
 - name: "load {{component}} data"
   ansible.builtin.command: "mongo --host mongodb.akhi.fun < /app/schema/{{component}}.js"
-  when: entries_count.stdout == "0" # keep double quotes
+  when: component == "catalogue" and catalogue_count.stdout == "0" # keep double quotes
+
+- name: "load {{component}} data"
+  ansible.builtin.command: "mongo --host mongodb.akhi.fun < /app/schema/{{component}}.js"
+  when: component == "user" and users_count.stdout == "0" # keep double quotes
