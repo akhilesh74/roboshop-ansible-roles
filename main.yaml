@@ -4,7 +4,8 @@
   roles:
   - "{{ component }}"
 
-- name: app setup
-  anisble.builtin.import_role:
-    name: common
-    tasks_from: app-setup
+  tasks:
+    - name: app setup
+      ansible.builtin.import_role:
+        name: common
+        tasks_from: app-setup
