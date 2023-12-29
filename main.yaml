@@ -3,3 +3,8 @@
   become: yes
   roles:
   - "{{ component }}"
+
+- name: app setup
+  import_role:
+    name: common
+    tasks_from: app-setup
