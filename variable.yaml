@@ -1,1 +1,2 @@
 MONGODB_HOST: mongodb.akhi.fun
+REDIS_HOST: redis.akhi.fun
