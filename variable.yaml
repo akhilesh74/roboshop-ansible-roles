@@ -1,2 +1,3 @@
 MONGODB_HOST: mongodb.akhi.fun
 REDIS_HOST: redis.akhi.fun
+CATALOGUE_HOST: catalogue.akhi.fun
